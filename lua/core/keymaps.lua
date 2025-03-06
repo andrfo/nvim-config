@@ -4,6 +4,12 @@ local opts = { noremap = true, silent = true }
 -- Map <leader>e to open oil.nvim (your file explorer)
 vim.keymap.set("n", "<leader>e", "<CMD>Oil<CR>", opts)
 
+-- Insert mode cursor movement with Ctrl+hjkl
+vim.keymap.set("i", "<C-h>", "<Left>", opts)
+vim.keymap.set("i", "<C-j>", "<Down>", opts)
+vim.keymap.set("i", "<C-k>", "<Up>", opts)
+vim.keymap.set("i", "<C-l>", "<Right>", opts)
+
 -- LSP keymaps (moved from per-buffer to global with conditional checks)
 vim.keymap.set("n", "gd", function()
   vim.lsp.buf.definition()
