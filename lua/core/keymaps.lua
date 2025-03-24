@@ -28,7 +28,7 @@ vim.keymap.set("n", "<leader>ca", function()
   vim.lsp.buf.code_action()
 end, { noremap = true, silent = true, desc = "Code Action" })
 
-vim.keymap.set("n", "<leader>rn", function()
+vim.keymap.set("n", "<leader>ra", function()
   vim.lsp.buf.rename()
 end, { noremap = true, silent = true, desc = "Rename" })
 

@@ -11,6 +11,34 @@ return {
     end,
   },
 
+  {
+    "numToStr/Comment.nvim",
+    opts = {
+      -- Use leader / for toggling comments
+      mappings = {
+        basic = false,
+        extra = false,
+      },
+    },
+    keys = {
+      { "<leader>/", function() require("Comment.api").toggle.linewise.current() end,                 desc = "Toggle comment" },
+      { "<leader>/", "<ESC><CMD>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>", mode = "x",             desc = "Toggle comment" },
+    },
+  },
+
+  -- Add this to your lua/plugins/plugin_list.lua file
+  -- Insert this entry in the return {} block
+
+  -- Harpoon for quick file navigation
+  {
+    "ThePrimeagen/harpoon",
+    branch = "harpoon2",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+      require("plugins.config.harpoon")
+    end,
+  },
+
   -- oil.nvim for directory editing (replacing nvim-tree)
   {
     "stevearc/oil.nvim",
@@ -79,12 +107,66 @@ return {
   },
 
   {
+    {
+      "saecki/crates.nvim",
+      tag = "stable",
+      event = { "BufRead Cargo.toml" },
+      config = function()
+        local crates = require("crates")
+        crates.setup({
+          lsp = {
+            enabled = true,
+            actions = true,
+            completion = true,
+            hover = true,
+          },
+          completion = {
+            cmp = {
+              enabled = true,
+            },
+          },
+        })
+
+        -- Keymaps
+        vim.keymap.set("n", "<leader>cf", crates.show_features_popup, { desc = "Show Crate Features" })
+      end,
+    },
+  },
+
+  {
     'mrcjkb/rustaceanvim',
     version = '^5', -- Recommended
     ft = { "rust" },
-    opts = require("plugins.config.rustaceanvim"),
-    config = function(_, opts)
-      vim.g.rustaceanvim = opts
+    config = function()
+      local rustaceanvim_config = require("plugins.config.rustaceanvim")
+      -- Make sure to require lsp module after it's been defined
+      rustaceanvim_config.server.on_attach = function(client, bufnr)
+        local lsp = require("plugins.config.lsp")
+        if lsp.on_attach then
+          lsp.on_attach(client, bufnr)
+        end
+
+        -- Rust-specific keymaps (these will override the global ones)
+        vim.keymap.set(
+          "n",
+          "<leader>ca",
+          function()
+            vim.cmd.RustLsp('codeAction') -- supports rust-analyzer's grouping
+          end,
+          { silent = true, buffer = bufnr }
+        )
+
+        vim.keymap.set(
+          "n",
+          "K", -- Override Neovim's built-in hover keymap with rustaceanvim's hover actions
+          function()
+            vim.cmd.RustLsp({ 'hover', 'actions' })
+          end,
+          { silent = true, buffer = bufnr }
+        )
+      end
+
+      vim.g.rustaceanvim = rustaceanvim_config
     end,
   },
 

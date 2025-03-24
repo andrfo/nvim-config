@@ -1,4 +1,6 @@
 -- luacheck: globals vim
+local M = {}
+
 require("mason").setup()
 require("mason-lspconfig").setup({
   ensure_installed = {
@@ -15,7 +17,7 @@ require("mason-lspconfig").setup({
 local lspconfig = require("lspconfig")
 
 -- Create a common on_attach function to apply to all language servers
-local on_attach = function(client, bufnr)
+M.on_attach = function(client, bufnr)
   -- Enable completion triggered by <c-x><c-o>
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
@@ -46,7 +48,7 @@ end
 
 -- Setup other language servers
 lspconfig.lua_ls.setup({
-  on_attach = on_attach,
+  on_attach = M.on_attach,
   settings = {
     Lua = {
       diagnostics = {
@@ -57,23 +59,25 @@ lspconfig.lua_ls.setup({
 })
 
 lspconfig.pyright.setup({
-  on_attach = on_attach,
+  on_attach = M.on_attach,
 })
 
 lspconfig.terraformls.setup({
-  on_attach = on_attach,
+  on_attach = M.on_attach,
 })
 
 lspconfig.kotlin_language_server.setup({
-  on_attach = on_attach,
+  on_attach = M.on_attach,
 })
 
 lspconfig.gopls.setup({
-  on_attach = on_attach,
+  on_attach = M.on_attach,
 })
 
 lspconfig.marksman.setup({
-  on_attach = on_attach,
+  on_attach = M.on_attach,
 })
 
 -- Don't set up rust_analyzer here since it's handled by rustaceanvim
+
+return M
