@@ -10,6 +10,14 @@ vim.keymap.set("i", "<C-j>", "<Down>", opts)
 vim.keymap.set("i", "<C-k>", "<Up>", opts)
 vim.keymap.set("i", "<C-l>", "<Right>", opts)
 
+-- Clipboard handling mappings for macOS
+-- Paste from system clipboard with Cmd+v
+vim.keymap.set({ "n", "v" }, "<D-v>", '"+p', { noremap = true, desc = "Paste from system clipboard" })
+vim.keymap.set("i", "<D-v>", '<C-r>+', { noremap = true, desc = "Paste from system clipboard in insert mode" })
+
+-- Optional: Add a shortcut to explicitly paste from system clipboard when needed
+vim.keymap.set({ "n", "v" }, "<leader>p", '"+p', { noremap = true, desc = "Paste from system clipboard" })
+
 -- LSP keymaps (moved from per-buffer to global with conditional checks)
 vim.keymap.set("n", "gd", function()
   vim.lsp.buf.definition()
