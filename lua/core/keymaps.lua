@@ -10,6 +10,10 @@ vim.keymap.set("i", "<C-j>", "<Down>", opts)
 vim.keymap.set("i", "<C-k>", "<Up>", opts)
 vim.keymap.set("i", "<C-l>", "<Right>", opts)
 
+-- Modified visual mode paste to not overwrite the register
+-- This uses the black hole register "_" to discard the selected text
+vim.keymap.set("v", "p", '"_dP', { noremap = true, desc = "Paste without overwriting register" })
+
 -- Clipboard handling mappings for macOS
 -- Paste from system clipboard with Cmd+v
 vim.keymap.set({ "n", "v" }, "<D-v>", '"+p', { noremap = true, desc = "Paste from system clipboard" })
