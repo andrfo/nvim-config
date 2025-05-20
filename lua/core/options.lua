@@ -1,6 +1,6 @@
 -- luacheck: globals vim
 -- Core options
-vim.opt.clipboard = "" -- Don't automatically sync with system clipboard
+vim.opt.clipboard = "unnamed,unnamedplus" -- Sync yank operations with both * and + registers
 vim.opt.termguicolors = true
 vim.opt.number = true
 vim.opt.relativenumber = true

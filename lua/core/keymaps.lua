@@ -19,9 +19,6 @@ vim.keymap.set("v", "p", '"_dP', { noremap = true, desc = "Paste without overwri
 vim.keymap.set({ "n", "v" }, "<D-v>", '"+p', { noremap = true, desc = "Paste from system clipboard" })
 vim.keymap.set("i", "<D-v>", '<C-r>+', { noremap = true, desc = "Paste from system clipboard in insert mode" })
 
--- Optional: Add a shortcut to explicitly paste from system clipboard when needed
-vim.keymap.set({ "n", "v" }, "<leader>p", '"+p', { noremap = true, desc = "Paste from system clipboard" })
-
 -- LSP keymaps (moved from per-buffer to global with conditional checks)
 vim.keymap.set("n", "gd", function()
   vim.lsp.buf.definition()
