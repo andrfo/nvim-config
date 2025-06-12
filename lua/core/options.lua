@@ -11,11 +11,9 @@ vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 
 vim.diagnostic.config({
-  virtual_text = {
-    spacing = 4,
-    prefix = '●', -- you can choose your own symbol
-  },
-  signs = true,
+  virtual_text = true,
+  virtual_lines = { current_line = true },
+  float = { border = "rounded", },
   underline = true,
   update_in_insert = false,
 })
