@@ -132,44 +132,56 @@ return {
       end,
     },
   },
-
+{
+  'mrcjkb/rustaceanvim',
+  version = '^5',
+  lazy = false,
+  ft = { "rust" },
+  config = function()
+    vim.g.rustaceanvim = {
+      server = {
+        settings = {
+          ['rust-analyzer'] = {
+            check = {
+              command = "clippy",
+            },
+            cargo = {
+              allFeatures = false,
+            },
+            procMacro = {
+              enable = true,
+            },
+            diagnostics = {
+              enable = true,
+              experimental = {
+                enable = true,
+              },
+            },
+          },
+        },
+      },
+      dap = {
+        adapter = {
+          type = "executable",
+          command = "lldb-vscode",
+          name = "rt_lldb",
+        },
+      },
+    }
+  end,
+},
   {
-    'mrcjkb/rustaceanvim',
-    version = '^5', -- Recommended
-    ft = { "rust" },
-    config = function()
-      local rustaceanvim_config = require("plugins.config.rustaceanvim")
-      -- Make sure to require lsp module after it's been defined
-      rustaceanvim_config.server.on_attach = function(client, bufnr)
-        local lsp = require("plugins.config.lsp")
-        if lsp.on_attach then
-          lsp.on_attach(client, bufnr)
-        end
+	"OXY2DEV/markview.nvim",
+	opts = {},
+	lazy = true, -- false Recommended
+	ft = "markdown", -- If you decide to lazy-load anyway
 
-        -- Rust-specific keymaps (these will override the global ones)
-        vim.keymap.set(
-          "n",
-          "<leader>ca",
-          function()
-            vim.cmd.RustLsp('codeAction') -- supports rust-analyzer's grouping
-          end,
-          { silent = true, buffer = bufnr }
-        )
+	dependencies = {
+		"nvim-treesitter/nvim-treesitter",
 
-        vim.keymap.set(
-          "n",
-          "K", -- Override Neovim's built-in hover keymap with rustaceanvim's hover actions
-          function()
-            vim.cmd.RustLsp({ 'hover', 'actions' })
-          end,
-          { silent = true, buffer = bufnr }
-        )
-      end
-
-      vim.g.rustaceanvim = rustaceanvim_config
-    end,
-  },
-
+		"nvim-tree/nvim-web-devicons",
+	},
+},
   -- Add completion plugin
   {
     "hrsh7th/nvim-cmp",
