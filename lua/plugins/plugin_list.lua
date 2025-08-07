@@ -107,30 +107,28 @@ return {
   },
 
   {
-    {
-      "saecki/crates.nvim",
-      tag = "stable",
-      event = { "BufRead Cargo.toml" },
-      config = function()
-        local crates = require("crates")
-        crates.setup({
-          lsp = {
+    "saecki/crates.nvim",
+    tag = "stable",
+    event = { "BufRead Cargo.toml" },
+    config = function()
+      local crates = require("crates")
+      crates.setup({
+        lsp = {
+          enabled = true,
+          actions = true,
+          completion = true,
+          hover = true,
+        },
+        completion = {
+          cmp = {
             enabled = true,
-            actions = true,
-            completion = true,
-            hover = true,
           },
-          completion = {
-            cmp = {
-              enabled = true,
-            },
-          },
-        })
+        },
+      })
 
-        -- Keymaps
-        vim.keymap.set("n", "<leader>cf", crates.show_features_popup, { desc = "Show Crate Features" })
-      end,
-    },
+      -- Keymaps
+      vim.keymap.set("n", "<leader>cf", crates.show_features_popup, { desc = "Show Crate Features" })
+    end,
   },
 {
   'mrcjkb/rustaceanvim',
