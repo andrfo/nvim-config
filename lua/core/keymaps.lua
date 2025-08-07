@@ -20,26 +20,37 @@ vim.keymap.set({ "n", "v" }, "<D-v>", '"+p', { noremap = true, desc = "Paste fro
 vim.keymap.set("i", "<D-v>", '<C-r>+', { noremap = true, desc = "Paste from system clipboard in insert mode" })
 
 -- LSP keymaps (moved from per-buffer to global with conditional checks)
-vim.keymap.set("n", "gd", function()
-  vim.lsp.buf.definition()
-end, { noremap = true, silent = true, desc = "Go to Definition" })
+local function has_lsp()
+  local clients = vim.lsp.get_clients and vim.lsp.get_clients({ buf = 0 })
+      or vim.lsp.buf_get_clients(0)
+  return next(clients) ~= nil
+end
+
+local function with_lsp(fn)
+  return function(...)
+    if has_lsp() then
+      return fn(...)
+    else
+      vim.notify("LSP not attached", vim.log.levels.WARN)
+    end
+  end
+end
+
+vim.keymap.set("n", "gd", with_lsp(vim.lsp.buf.definition),
+  { noremap = true, silent = true, desc = "Go to Definition" })
 
 -- Add more common LSP keybindings
-vim.keymap.set("n", "gr", function()
-  vim.lsp.buf.references()
-end, { noremap = true, silent = true, desc = "Go to References" })
+vim.keymap.set("n", "gr", with_lsp(vim.lsp.buf.references),
+  { noremap = true, silent = true, desc = "Go to References" })
 
-vim.keymap.set("n", "K", function()
-  vim.lsp.buf.hover()
-end, { noremap = true, silent = true, desc = "Hover Documentation" })
+vim.keymap.set("n", "K", with_lsp(vim.lsp.buf.hover),
+  { noremap = true, silent = true, desc = "Hover Documentation" })
 
-vim.keymap.set("n", "<leader>ca", function()
-  vim.lsp.buf.code_action()
-end, { noremap = true, silent = true, desc = "Code Action" })
+vim.keymap.set("n", "<leader>ca", with_lsp(vim.lsp.buf.code_action),
+  { noremap = true, silent = true, desc = "Code Action" })
 
-vim.keymap.set("n", "<leader>ra", function()
-  vim.lsp.buf.rename()
-end, { noremap = true, silent = true, desc = "Rename" })
+vim.keymap.set("n", "<leader>ra", with_lsp(vim.lsp.buf.rename),
+  { noremap = true, silent = true, desc = "Rename" })
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float,
