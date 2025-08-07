@@ -1,7 +1,7 @@
 -- luacheck: globals vim
 local opts = { noremap = true, silent = true }
 
--- Map <leader>e to open oil.nvim (your file explorer)
+-- Map - to open oil.nvim (file explorer)
 vim.keymap.set("n", "-", "<CMD>Oil<CR>", opts)
 
 -- Insert mode cursor movement with Ctrl+hjkl
