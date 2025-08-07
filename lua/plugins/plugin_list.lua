@@ -107,69 +107,67 @@ return {
   },
 
   {
-    {
-      "saecki/crates.nvim",
-      tag = "stable",
-      event = { "BufRead Cargo.toml" },
-      config = function()
-        local crates = require("crates")
-        crates.setup({
-          lsp = {
+    "saecki/crates.nvim",
+    tag = "stable",
+    event = { "BufRead Cargo.toml" },
+    config = function()
+      local crates = require("crates")
+      crates.setup({
+        lsp = {
+          enabled = true,
+          actions = true,
+          completion = true,
+          hover = true,
+        },
+        completion = {
+          cmp = {
             enabled = true,
-            actions = true,
-            completion = true,
-            hover = true,
           },
-          completion = {
-            cmp = {
-              enabled = true,
-            },
-          },
-        })
+        },
+      })
 
-        -- Keymaps
-        vim.keymap.set("n", "<leader>cf", crates.show_features_popup, { desc = "Show Crate Features" })
-      end,
-    },
+      -- Keymaps
+      vim.keymap.set("n", "<leader>cf", crates.show_features_popup, { desc = "Show Crate Features" })
+    end,
   },
-{
-  'mrcjkb/rustaceanvim',
-  version = '^5',
-  lazy = false,
-  ft = { "rust" },
-  config = function()
-    vim.g.rustaceanvim = {
-      server = {
-        settings = {
-          ['rust-analyzer'] = {
-            check = {
-              command = "clippy",
-            },
-            cargo = {
-              allFeatures = false,
-            },
-            procMacro = {
-              enable = true,
-            },
-            diagnostics = {
-              enable = true,
-              experimental = {
+  {
+    'mrcjkb/rustaceanvim',
+    version = '^5',
+    lazy = false,
+    ft = { "rust" },
+    config = function()
+      vim.g.rustaceanvim = {
+        server = {
+          settings = {
+            ['rust-analyzer'] = {
+              check = {
+                command = "clippy",
+              },
+              cargo = {
+                allFeatures = false,
+              },
+              procMacro = {
                 enable = true,
+              },
+              diagnostics = {
+                enable = true,
+                experimental = {
+                  enable = true,
+                },
               },
             },
           },
         },
-      },
-      dap = {
-        adapter = {
-          type = "executable",
-          command = "lldb-vscode",
-          name = "rt_lldb",
+        dap = {
+          adapter = {
+            type = "executable",
+            command = "lldb-vscode",
+            name = "rt_lldb",
+          },
         },
-      },
-    }
-  end,
-},
+      }
+    end,
+  },
   {
 	"OXY2DEV/markview.nvim",
 	opts = {},
