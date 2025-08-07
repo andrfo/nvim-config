@@ -173,7 +173,7 @@ return {
   {
 	"OXY2DEV/markview.nvim",
 	opts = {},
-	lazy = true, -- false Recommended
+        lazy = true, -- set to false to load on startup (recommended)
 	ft = "markdown", -- If you decide to lazy-load anyway
 
 	dependencies = {
