@@ -19,5 +19,5 @@ vim.opt.rtp:prepend(lazypath)
 require("core.options")
 require("core.keymaps")
 
--- Setup plugins via lazy.nvim using our plugin list
-require("lazy").setup(require("plugins.plugin_list"))
+-- Setup plugins via lazy.nvim by loading each plugin module
+require("lazy").setup("plugins")
