@@ -18,7 +18,7 @@ return {
       },
     })
 
-    vim.keymap.set("n", "<leader>cf", crates.show_features_popup, { desc = "Show Crate Features" })
+    vim.keymap.set("n", "<leader>cF", crates.show_features_popup, { desc = "Show Crate Features" })
   end,
 }
 

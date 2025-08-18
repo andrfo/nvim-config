@@ -22,9 +22,9 @@ return {
 		keys = {
 			{ "<leader>ct", ":CopilotChatToggle<CR>", desc = "Toggle CopilotChat" },
 
-			{ "<leader>cr", ":CopilotChatRename<CR>", mode = "v", desc = "CopilotChat - Rename" },
-			{ "<leader>cR", ":CopilotChatReview<CR>", mode = "v", desc = "CopilotChat - Review code" },
-			{ "<leader>ct", ":CopilotChatTestsCR>", mode = "v", desc = "CopilotChat - Write tests" },
+			{ "<leader>cR", ":CopilotChatRename<CR>", mode = "v", desc = "CopilotChat - Rename" },
+			{ "<leader>cr", ":CopilotChatReview<CR>", mode = "v", desc = "CopilotChat - Review code" },
+			{ "<leader>ct", ":CopilotChatTests<CR>", mode = "v", desc = "CopilotChat - Write tests" },
 			{ "<leader>cd", ":CopilotChatToggle<CR>", mode = "v", desc = "CopilotChat - Write documentation" },
 
 			{ "<leader>cp", ":CopilotChatPrompts<CR>", desc = "View/Select CopilotChat Prompts" },
